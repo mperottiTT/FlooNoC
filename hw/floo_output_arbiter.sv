@@ -149,6 +149,5 @@ module floo_output_arbiter import floo_pkg::*;
   // Cannot have an output valid without at least one input valid
   `ASSERT(ValidOutInvalidIn, valid_o |-> |valid_i)
 
-  `ASSERT_INIT(InvalidNumParallelRedRoutes, !(NumParallelRedRoutes == 1),
-               "Number of parallel reduction routes cannot be 1")
+  `ASSERT_INIT(InvalidNumParallelRedRoutes, !(NumParallelRedRoutes == 1))
 endmodule

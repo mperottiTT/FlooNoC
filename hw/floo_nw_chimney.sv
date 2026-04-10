@@ -1832,22 +1832,17 @@ module floo_nw_chimney
   `ASSERT_INIT(NoRobReduction,
               !(en_wide_reduction(CollectOpCfg) | en_narrow_reduction(CollectOpCfg)) ||
               (ChimneyCfgN.BRoBType == NoRoB && ChimneyCfgN.RRoBType == NoRoB &&
-               ChimneyCfgW.BRoBType == NoRoB && ChimneyCfgW.RRoBType == NoRoB),
-               "Invalid Chimney Cfg with reduction support")
+               ChimneyCfgW.BRoBType == NoRoB && ChimneyCfgW.RRoBType == NoRoB))
 
   // When virtual channels for decoupled read and write is enabled,
   // req_i and req_o must have same amount of VCs, equal to NumVirtualChannels
   `ASSERT_INIT(VCMismatchInputReady,
-          !EnDecoupledRW | ($bits(floo_wide_i.ready) == NumVirtualChannels),
-          $sformatf("Input request must have %0d VCs when EnDecoupledRW==1", NumVirtualChannels));
+          !EnDecoupledRW | ($bits(floo_wide_i.ready) == NumVirtualChannels))
   `ASSERT_INIT(VCMismatchOutputReady,
-          !EnDecoupledRW | ($bits(floo_wide_o.ready) == NumVirtualChannels),
-          $sformatf("Output request must have %0d VCs when EnDecoupledRW==1", NumVirtualChannels));
+          !EnDecoupledRW | ($bits(floo_wide_o.ready) == NumVirtualChannels))
   `ASSERT_INIT(VCMismatchInputValid,
-          !EnDecoupledRW | ($bits(floo_wide_i.valid) == NumVirtualChannels),
-          $sformatf("Input request must have %0d VCs when EnDecoupledRW==1", NumVirtualChannels));
+          !EnDecoupledRW | ($bits(floo_wide_i.valid) == NumVirtualChannels))
   `ASSERT_INIT(VCMismatchOutputValid,
-          !EnDecoupledRW | ($bits(floo_wide_o.valid) == NumVirtualChannels),
-          $sformatf("Output request must have %0d VCs when EnDecoupledRW==1", NumVirtualChannels));
+          !EnDecoupledRW | ($bits(floo_wide_o.valid) == NumVirtualChannels))
 
 endmodule
