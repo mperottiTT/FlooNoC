@@ -76,6 +76,6 @@ module floo_wormhole_arbiter import floo_pkg::*;
   `FF(valid_q, valid_d, '0)
   `FF(last_q, last_out & ready_i, '0)
 
-  `ASSERT(InvalidCreation, valid_o |-> |valid_i)
+  `TT_OPENSOURCE_ASSERT(InvalidCreation, valid_o |-> |valid_i)
 
 endmodule

@@ -39,7 +39,7 @@ module floo_input_fifo #(
       .ready_i,
       .data_o
     );
-    `ASSERT(RegFullWrite, ready_out | !valid_i)
+    `TT_OPENSOURCE_ASSERT(RegFullWrite, ready_out | !valid_i)
   end else if(Depth == 2) begin : gen_fifo_2
     logic ready_for_input;
     // The A register.
@@ -77,7 +77,7 @@ module floo_input_fifo #(
     // Empty reg B before A
     assign data_o = b_full_q ? b_data_q : a_data_q;
 
-    `ASSERT(RegFullWrite, ready_for_input | !valid_i)
+    `TT_OPENSOURCE_ASSERT(RegFullWrite, ready_for_input | !valid_i)
   end else if(Depth == 3) begin : gen_fifo_3
     logic ready_for_input;
     // The A register.
@@ -124,10 +124,10 @@ module floo_input_fifo #(
     assign valid_o = a_full_q | b_full_q | c_full_q;
     assign data_o = c_full_q ? c_data_q : b_full_q ? b_data_q : a_data_q;
 
-    `ASSERT(CFullBEmpty, !c_full_q | b_full_q)
-    `ASSERT(CFullAEmpty, !c_full_q | a_full_q)
-    `ASSERT(BFullAEmpty, !b_full_q | a_full_q)
-    `ASSERT(RegFullWrite, ready_for_input | !valid_i)
+    `TT_OPENSOURCE_ASSERT(CFullBEmpty, !c_full_q | b_full_q)
+    `TT_OPENSOURCE_ASSERT(CFullAEmpty, !c_full_q | a_full_q)
+    `TT_OPENSOURCE_ASSERT(BFullAEmpty, !b_full_q | a_full_q)
+    `TT_OPENSOURCE_ASSERT(RegFullWrite, ready_for_input | !valid_i)
   end else begin : gen_fifo_general
     logic reg_ready;
     $warning("if depth != 2, write and read is not possible at same time while full");
@@ -147,7 +147,7 @@ module floo_input_fifo #(
       .valid_o,
       .ready_i
     );
-    `ASSERT(RegNotReadyWrite, reg_ready | !valid_i)
+    `TT_OPENSOURCE_ASSERT(RegNotReadyWrite, reg_ready | !valid_i)
   end
 
 endmodule

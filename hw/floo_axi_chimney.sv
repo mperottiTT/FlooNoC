@@ -377,7 +377,7 @@ module floo_axi_chimney
   end else begin : gen_no_atop_support
     assign aw_rob_valid_in = axi_aw_queue_valid_out;
     assign axi_aw_queue_ready_in = aw_rob_ready_out;
-    `ASSERT(NoAtopSupport, !(axi_aw_queue_valid_out && (axi_aw_queue.atop != axi_pkg::ATOP_NONE)))
+    `TT_OPENSOURCE_ASSERT(NoAtopSupport, !(axi_aw_queue_valid_out && (axi_aw_queue.atop != axi_pkg::ATOP_NONE)))
   end
 
   floo_rob_wrapper #(
@@ -873,16 +873,16 @@ module floo_axi_chimney
                                                           ChimneyCfg.RRoBType == NoRoB))
 
   // Network Interface cannot accept any B and R responses if `EnMgrPort` is not set
-  `ASSERT(NoMgrPortBResponse, ChimneyCfg.EnMgrPort || !(floo_rsp_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoMgrPortBResponse, ChimneyCfg.EnMgrPort || !(floo_rsp_in_valid &&
                                              (unpack_rsp_generic.hdr.axi_ch == AxiB)))
-  `ASSERT(NoMgrPortRResponse, ChimneyCfg.EnMgrPort || !(floo_rsp_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoMgrPortRResponse, ChimneyCfg.EnMgrPort || !(floo_rsp_in_valid &&
                                              (unpack_rsp_generic.hdr.axi_ch == AxiR)))
   // Network Interface cannot accept any AW, AR and W requests if `EnSbrPort` is not set
-  `ASSERT(NoSbrPortAwRequest, ChimneyCfg.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoSbrPortAwRequest, ChimneyCfg.EnSbrPort || !(floo_req_in_valid &&
                                              (unpack_req_generic.hdr.axi_ch == AxiAw)))
-  `ASSERT(NoSbrPortArRequest, ChimneyCfg.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoSbrPortArRequest, ChimneyCfg.EnSbrPort || !(floo_req_in_valid &&
                                              (unpack_req_generic.hdr.axi_ch == AxiAr)))
-  `ASSERT(NoSbrPortWRequest,  ChimneyCfg.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoSbrPortWRequest,  ChimneyCfg.EnSbrPort || !(floo_req_in_valid &&
                                              (unpack_req_generic.hdr.axi_ch == AxiW)))
 
 endmodule

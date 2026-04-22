@@ -58,8 +58,7 @@ module floo_id_translation #(
       .default_idx_i    ( '0          )
     );
 
-    `ASSERT(DecodeError, !(dec_error && valid_i), clk_i, !rst_ni,
-        $sformatf("Error decoding address 0x%0x.", $sampled(addr_i)));
+    `TT_OPENSOURCE_ASSERT(DecodeError, !(dec_error && valid_i), clk_i, !rst_ni);
 
     if (EnCollective) begin: gen_mcast_id_mask
       assign mask_addr_x_o = idx_out.mask_x;

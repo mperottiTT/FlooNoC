@@ -756,7 +756,7 @@ module floo_nw_chimney
   end else begin : gen_no_atop_support
     assign narrow_aw_rob_valid_in = axi_narrow_aw_queue_valid_out;
     assign axi_narrow_aw_queue_ready_in = narrow_aw_rob_ready_in;
-    `ASSERT(NoAtopSupport, !(axi_narrow_aw_queue_valid_out &&
+    `TT_OPENSOURCE_ASSERT(NoAtopSupport, !(axi_narrow_aw_queue_valid_out &&
                              (axi_narrow_aw_queue.atop != axi_pkg::ATOP_NONE)))
   end
 
@@ -1792,40 +1792,40 @@ module floo_nw_chimney
                 ChimneyCfgW.RRoBType == floo_pkg::NoRoB))
 
   // Data and valid signals must be stable/asserted when ready is low
-  `ASSERT(NarrowReqOutStableValid, floo_req_o.valid &&
+  `TT_OPENSOURCE_ASSERT(NarrowReqOutStableValid, floo_req_o.valid &&
                                    !floo_req_i.ready |=> floo_req_o.valid)
-  `ASSERT(NarrowReqInStableValid, floo_req_i.valid &&
+  `TT_OPENSOURCE_ASSERT(NarrowReqInStableValid, floo_req_i.valid &&
                                   !floo_req_o.ready |=> floo_req_i.valid)
-  `ASSERT(NarrowRspOutStableValid, floo_rsp_o.valid &&
+  `TT_OPENSOURCE_ASSERT(NarrowRspOutStableValid, floo_rsp_o.valid &&
                                    !floo_rsp_i.ready |=> floo_rsp_o.valid)
-  `ASSERT(NarrowRspInStableValid, floo_rsp_i.valid &&
+  `TT_OPENSOURCE_ASSERT(NarrowRspInStableValid, floo_rsp_i.valid &&
                                   !floo_rsp_o.ready |=> floo_rsp_i.valid)
-  `ASSERT(WideOutStableValid, floo_wide_o.valid &&
+  `TT_OPENSOURCE_ASSERT(WideOutStableValid, floo_wide_o.valid &&
                               !floo_wide_i.ready |=> floo_wide_o.valid)
-  `ASSERT(WideStableValid, floo_wide_i.valid &&
+  `TT_OPENSOURCE_ASSERT(WideStableValid, floo_wide_i.valid &&
                            !floo_wide_o.ready |=> floo_wide_i.valid)
 
   // Network Interface cannot accept any B and R responses if `En*MgrPort` are not set
-  `ASSERT(NoNarrowMgrPortBResponse, ChimneyCfgN.EnMgrPort || !(floo_rsp_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoNarrowMgrPortBResponse, ChimneyCfgN.EnMgrPort || !(floo_rsp_in_valid &&
                            (floo_rsp_unpack_generic.hdr.axi_ch == NarrowB)))
-  `ASSERT(NoNarrowMgrPortRResponse, ChimneyCfgN.EnMgrPort || !(floo_rsp_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoNarrowMgrPortRResponse, ChimneyCfgN.EnMgrPort || !(floo_rsp_in_valid &&
                            (floo_rsp_unpack_generic.hdr.axi_ch == NarrowR)))
-  `ASSERT(NoWideMgrPortBResponse, ChimneyCfgW.EnMgrPort || !(floo_rsp_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoWideMgrPortBResponse, ChimneyCfgW.EnMgrPort || !(floo_rsp_in_valid &&
                            (floo_rsp_unpack_generic.hdr.axi_ch == WideB)))
-  `ASSERT(NoWideMgrPortRResponse, ChimneyCfgW.EnMgrPort || !(floo_wide_in_rd_valid_q &&
+  `TT_OPENSOURCE_ASSERT(NoWideMgrPortRResponse, ChimneyCfgW.EnMgrPort || !(floo_wide_in_rd_valid_q &&
                            (floo_wide_unpack_generic_rd.hdr.axi_ch == WideR)))
   // Network Interface cannot accept any AW, AR and W requests if `En*SbrPort` is not set
-  `ASSERT(NoNarrowSbrPortAwRequest, ChimneyCfgN.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoNarrowSbrPortAwRequest, ChimneyCfgN.EnSbrPort || !(floo_req_in_valid &&
                            (floo_req_unpack_generic.hdr.axi_ch == NarrowAw)))
-  `ASSERT(NoNarrowSbrPortArRequest, ChimneyCfgN.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoNarrowSbrPortArRequest, ChimneyCfgN.EnSbrPort || !(floo_req_in_valid &&
                            (floo_req_unpack_generic.hdr.axi_ch == NarrowAr)))
-  `ASSERT(NoNarrowSbrPortWRequest,  ChimneyCfgN.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoNarrowSbrPortWRequest,  ChimneyCfgN.EnSbrPort || !(floo_req_in_valid &&
                            (floo_req_unpack_generic.hdr.axi_ch == NarrowW)))
-  `ASSERT(NoWideSbrPortAwRequest, ChimneyCfgW.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoWideSbrPortAwRequest, ChimneyCfgW.EnSbrPort || !(floo_req_in_valid &&
                            (floo_req_unpack_generic.hdr.axi_ch == WideAw)))
-  `ASSERT(NoWideSbrPortArRequest, ChimneyCfgW.EnSbrPort || !(floo_req_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoWideSbrPortArRequest, ChimneyCfgW.EnSbrPort || !(floo_req_in_valid &&
                            (floo_req_unpack_generic.hdr.axi_ch == WideAr)))
-  `ASSERT(NoWideSbrPortWRequest,  ChimneyCfgW.EnSbrPort || !(floo_wide_in_valid &&
+  `TT_OPENSOURCE_ASSERT(NoWideSbrPortWRequest,  ChimneyCfgW.EnSbrPort || !(floo_wide_in_valid &&
                            (floo_wide_unpack_generic_wr.hdr.axi_ch == WideW)))
 
   // We do not support reduction with ROB Buffer

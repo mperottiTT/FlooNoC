@@ -491,9 +491,9 @@ module floo_router
     for (genvar i = 0; i < NumInput; i++) begin : gen_input_assert
       for (genvar v = 0; v < NumVirtChannels; v++) begin : gen_virt_assert
         // Assert that the input data is stable when valid is asserted
-        // `ASSERT(StableDataIn, valid_i[i][v] && !ready_o[i][v] |=> $stable(data_i[i][v]))
+        // `TT_OPENSOURCE_ASSERT(StableDataIn, valid_i[i][v] && !ready_o[i][v] |=> $stable(data_i[i][v]))
         // Assert that valid is stable when ready is not asserted
-        `ASSERT(StableValidIn, valid_i[i][v] && !ready_o[i][v] |=> $stable(valid_i[i][v]))
+        `TT_OPENSOURCE_ASSERT(StableValidIn, valid_i[i][v] && !ready_o[i][v] |=> $stable(valid_i[i][v]))
       end
     end
   end
@@ -502,7 +502,7 @@ module floo_router
     for (genvar o = 0; o < NumOutput; o++) begin : gen_output_assert
       for (genvar v = 0; v < NumVirtChannels; v++) begin : gen_virt_assert
         // Assert that valid is stable when ready is not asserted
-        `ASSERT(StableValidOut, valid_o[o][v] && !ready_i[o][v] |=> $stable(valid_o[o][v]))
+        `TT_OPENSOURCE_ASSERT(StableValidOut, valid_o[o][v] && !ready_i[o][v] |=> $stable(valid_o[o][v]))
       end
     end
   end
@@ -510,7 +510,7 @@ module floo_router
   // If XYRouting optimization is enabled, assert that not Y->X routing occurs
   if ((RouteAlgo == XYRouting) && XYRouteOpt) begin : gen_xy_opt_assert
     for (genvar v = 0; v < NumVirtChannels; v++) begin : gen_virt
-      `ASSERT(XYDirectionNotAllowed,
+      `TT_OPENSOURCE_ASSERT(XYDirectionNotAllowed,
           !(in_valid[South][v] && route_mask[South][v][East]) &&
           !(in_valid[South][v] && route_mask[South][v][West]) &&
           !(in_valid[North][v] && route_mask[North][v][East]) &&
@@ -522,7 +522,7 @@ module floo_router
   if (NoLoopback) begin: gen_no_loopback_assert
     for (genvar in = 0; in < NumInput; in++) begin : gen_input
       for (genvar v = 0; v < NumVirtChannels; v++) begin : gen_virt
-        `ASSERT(NoLoopback, !(in_valid[in][v] && route_mask[in][v][in] &&
+        `TT_OPENSOURCE_ASSERT(NoLoopback, !(in_valid[in][v] && route_mask[in][v][in] &&
                             (in_data[in][v].hdr.collective_op == Unicast)))
       end
     end
@@ -532,7 +532,7 @@ module floo_router
   // the reduction traffic must arrive from Virtual Channel 0
   if (EnSequentialReduction && (NumVirtChannels > 1)) begin: gen_vc_red
     for (genvar in = 0; in < NumInput; in++) begin: gen_red_vc_idx_assert
-        `ASSERT(CollOpReceivedOnWrongVirtChannel, !red_valid_in[in][1])
+        `TT_OPENSOURCE_ASSERT(CollOpReceivedOnWrongVirtChannel, !red_valid_in[in][1])
     end
   end
 

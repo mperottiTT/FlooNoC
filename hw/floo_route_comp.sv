@@ -97,13 +97,13 @@ module floo_route_comp
       assign mask_o.x = (mask_i & x_addr_mask) >> x_mask_sel.offset;
       assign mask_o.y = (mask_i & y_addr_mask) >> y_mask_sel.offset;
       assign mask_o.port_id = '0;
-      `ASSERT(MaskDecodeError, !mask_dec_error)
+      `TT_OPENSOURCE_ASSERT(MaskDecodeError, !mask_dec_error)
     end
     else begin : gen_no_mcast_mask
       assign mask_o = '0;
     end
 
-    `ASSERT(DecodeError, !dec_error)
+    `TT_OPENSOURCE_ASSERT(DecodeError, !dec_error)
   end else if (RouteCfg.RouteAlgo == XYRouting) begin : gen_xy_bits_routing
     assign id_o.port_id = '0;
     assign id_o.x = addr_i[RouteCfg.XYAddrOffsetX +: $bits(id_o.x)];

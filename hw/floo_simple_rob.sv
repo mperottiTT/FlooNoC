@@ -214,6 +214,6 @@ module floo_simple_rob #(
   `FF(rsp_out_valid_q, rsp_out_valid_d, '0)
 
   // This module currently does not handle interleaved burst responses correctly
-  `ASSERT(NoBurstSupport, rsp_last_i == 1'b1)
+  `TT_OPENSOURCE_ASSERT(NoBurstSupport, rsp_last_i == 1'b1)
 
 endmodule

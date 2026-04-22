@@ -155,7 +155,7 @@ end else if (NumPhysChannels == 1) begin : gen_single_phys
 
   // Only one VC can access the physical link at a time
     if (NumVirtChannels != NumPhysChannels) begin: gen_onehot_assert
-      `ASSERT(OneHotOutputValid, $onehot0(valid_o))
+      `TT_OPENSOURCE_ASSERT(OneHotOutputValid, $onehot0(valid_o))
     end
 
   // Currently only supports two virtual channels

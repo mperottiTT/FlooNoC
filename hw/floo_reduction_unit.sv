@@ -321,9 +321,8 @@ module floo_reduction_unit
   );
   assign data_o = {NumOutputs{result_flit_out}};
 
-  `ASSERT(ReductionFrom2MoreInputs,
+  `TT_OPENSOURCE_ASSERT(ReductionFrom2MoreInputs,
           !(|valid_i) || ($countones(in_mask_i[operand1_sel]) == 0) ||
           ($countones(in_mask_i[operand1_sel]) == 2),
-         clk_i, !rst_ni,
-         "Incoming sequential reduction from more than 2 inputs is not supported")
+         clk_i, !rst_ni)
 endmodule

@@ -390,7 +390,7 @@ end
 /* Assertions for the module */
 
 // Currently we only support 32Bit operations! Could be extended in the future
-`ASSERT(Invalid_Input, !((fmt_i != floo_alu_pkg::INT32) && (fmt_i != floo_alu_pkg::UINT32)))
-`ASSERT(Invalid_Vector_Ops, !(vector_mode_i != 1'b0))
+`TT_OPENSOURCE_ASSERT(Invalid_Input, !((fmt_i != floo_alu_pkg::INT32) && (fmt_i != floo_alu_pkg::UINT32)))
+`TT_OPENSOURCE_ASSERT(Invalid_Vector_Ops, !(vector_mode_i != 1'b0))
 
 endmodule
